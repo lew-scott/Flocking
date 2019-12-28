@@ -20,12 +20,16 @@
  ******************************************************************************************/
 #include "MainWindow.h"
 #include "Game.h"
+#include "Vec2.h"
+
+;
 
 Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd )
 {
+
 }
 
 void Game::Go()
@@ -38,8 +42,12 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	F.updatePos();
 }
+
 
 void Game::ComposeFrame()
 {
+	F.drawBirds(gfx);
+	F.drawObstacles(gfx);
 }

@@ -23,6 +23,8 @@
 #include "Keyboard.h"
 #include "Mouse.h"
 #include "Graphics.h"
+#include <random>
+#include "Flock.h"
 
 class Game
 {
@@ -31,6 +33,7 @@ public:
 	Game( const Game& ) = delete;
 	Game& operator=( const Game& ) = delete;
 	void Go();
+
 private:
 	void ComposeFrame();
 	void UpdateModel();
@@ -40,7 +43,10 @@ private:
 private:
 	MainWindow& wnd;
 	Graphics gfx;
+	
 	/********************************/
 	/*  User Variables              */
 	/********************************/
+	Flock F;
+	
 };

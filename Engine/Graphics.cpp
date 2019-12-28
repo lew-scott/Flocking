@@ -26,6 +26,7 @@
 #include <string>
 #include <array>
 
+
 // Ignore the intellisense error "cannot open source file" for .shh files.
 // They will be created during the build sequence before the preprocessor runs.
 namespace FramebufferShaders
@@ -309,12 +310,115 @@ void Graphics::BeginFrame()
 
 void Graphics::PutPixel( int x,int y,Color c )
 {
+	if (x < 0)
+	{
+		x += ScreenWidth;
+	}
+	else if (x >= ScreenWidth)
+	{
+		x -= ScreenWidth;
+	}
+
+	if (y < 0)
+	{
+		y += ScreenHeight;
+	}
+	else if (y >= ScreenHeight)
+	{
+		y -= ScreenHeight;
+	}
+
 	assert( x >= 0 );
 	assert( x < int( Graphics::ScreenWidth ) );
 	assert( y >= 0 );
 	assert( y < int( Graphics::ScreenHeight ) );
 	pSysBuffer[Graphics::ScreenWidth * y + x] = c;
 }
+
+void Graphics::Drawline(Vec2 p1, Vec2 p2, Color color)
+{
+	float m = 0.0f;
+	if (p1.x != p2.x)
+	{
+		m = (p2.y - p1.y) / (p2.x - p1.x);
+	}
+
+	if (p1.x != p2.x && std::abs(m) <= 1.0f)
+	{
+		if (p1.x > p2.x)
+		{
+			std::swap(p1, p2);
+		}
+
+		const float c = p2.y - m * p2.x;
+
+		for (int x = (int)p1.x; x < (int)p2.x; x++)
+		{
+			const float y = m * (float)x + c;
+			PutPixel(x, (int)y, color);
+		}
+
+	}
+	else
+	{
+		if (p1.y > p2.y)
+		{
+			std::swap(p1, p2);
+		}
+
+		const float w = (p2.x - p1.x) / (p2.y - p1.y);
+		const float p = p2.x - w * p2.y;
+
+		for (int y = (int)p1.y; y <= (int)p2.y; y++)
+		{
+			const float x = w * (float)y + p;
+			PutPixel(x, (int)y, color);
+		}
+	}
+
+	
+	
+
+
+}
+
+void Graphics::DrawCircle(int x, int y, int radius, Color c)
+{
+	const int rad_sq = radius * radius;
+	for (int y_loop = y - radius; y_loop < y + radius + 1; y_loop++)
+	{
+		for (int x_loop = x - radius; x_loop < x + radius + 1; x_loop++)
+		{
+			const int x_diff = x - x_loop;
+			const int y_diff = y - y_loop;
+			if (x_diff * x_diff + y_diff * y_diff <= rad_sq)
+			{
+				PutPixel(x_loop, y_loop, c);
+			}
+		}
+	}
+}
+
+void Graphics::DrawLineCircle(int x, int y, int innerRadius, int outerRadius, Color c)
+{
+	const int rad_sq = outerRadius * outerRadius;
+	const int innerRad_sq = innerRadius * innerRadius;
+	for (int y_loop = y - outerRadius; y_loop < y + outerRadius + 1; y_loop++)
+	{
+		for (int x_loop = x - outerRadius; x_loop < x + outerRadius + 1; x_loop++)
+		{
+			const int x_diff = x - x_loop;
+			const int y_diff = y - y_loop;
+			if (x_diff * x_diff + y_diff * y_diff <= rad_sq && x_diff * x_diff + y_diff * y_diff > innerRad_sq)
+			{
+				PutPixel(x_loop, y_loop, c);
+			}
+		}
+	}
+}
+
+
+
 
 
 //////////////////////////////////////////////////
