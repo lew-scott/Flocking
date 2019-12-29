@@ -21,13 +21,7 @@ Flock::Flock()
 	//b[0].init(Vec2(550,290), Vec2(-2,0));
 	//b[1].init(Vec2(550,270), Vec2(-2,0));
 	//o[0].initObstacles(Vec2(400,300), 40);
-	
-	std::uniform_int_distribution<int> rDist(20, 40);
-	for (int i = 0; i < obstacles; ++i)
-	{
-		o[i].initObstacles(Vec2(xDist(rng),yDist(rng)), rDist(rng));
-	}
-	
+
 }
 
 Vec2 Flock::align(Bird & birdA)
@@ -106,9 +100,9 @@ Vec2 Flock::Seperation(Bird& birdA)
 	}
 
 	x = x.GetNormalized();
-	return x;
+	return x * 0.5;
 }
-
+/*
 Vec2 Flock::avoidObstacle(Bird & birdA)
 {
 	Vec2 a = { 0,0 };
@@ -150,6 +144,7 @@ Vec2 Flock::avoidObstacle(Bird & birdA)
 	x = x.rotate(angle);
 	return x;
 }
+*/
 
 bool Flock::neighbourFound(Bird & birdA, Bird & birdB)
 {
@@ -175,6 +170,7 @@ bool Flock::moveAway(Bird & birdA, Bird & birdB)
 	return false;
 }
 
+/*
 bool Flock::detectObstacle(Bird & bird, Obstacle & obst)
 {
 	Vec2 x = bird.getSensorPos();
@@ -185,28 +181,18 @@ bool Flock::detectObstacle(Bird & bird, Obstacle & obst)
 	}
 	return false;
 }
-
+*/
 void Flock::updatePos()
 {
 	
 	for (int i = 0; i < birds; i++)
 	{
 		steer = { 0,0 };
-		steer += avoidObstacle(b[i]);
-		if (oDetected == false)
-		{
-			steer += align(b[i]);
-			steer += Cohesion(b[i]);
-			steer += Seperation(b[i]);
-			b[i].UpdateSteer(steer);
-		}
-		else
-		{
-			steer += align(b[i]);
-			steer += Cohesion(b[i]);
-			steer += Seperation(b[i]);
-			b[i].UpdateSteer(steer);
-		}
+		steer += align(b[i]);
+		steer += Cohesion(b[i]);
+		steer += Seperation(b[i]);
+		b[i].UpdateSteer(steer);
+		
 	}
 	for (int i = 0; i < birds; i++)
 	{
@@ -223,6 +209,7 @@ void Flock::drawBirds(Graphics& gfx)
 	}
 }
 
+/*
 void Flock::drawObstacles(Graphics & gfx)
 {
 	for (int i = 0; i < obstacles; i++)
@@ -230,5 +217,6 @@ void Flock::drawObstacles(Graphics & gfx)
 		o[i].drawObstacle(gfx);
 	}
 }
+*/
 
 

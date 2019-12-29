@@ -13,10 +13,10 @@ void Bird::init(const Vec2 & pos_in, const Vec2 & vel_in, const Color& col_in)
 void Bird::DrawBird(Graphics& gfx) const
 {
 	// initiate at origin
-	Vec2 p1(0.0f,-10.0f);
-	Vec2 p2(5.0f, 5.0f);
-	Vec2 p3(0.0f, 2.5f);
-	Vec2 p4(-5.0f, 5.0f);
+	Vec2 p1(0.0f,-6.0f);
+	Vec2 p2(2.0f, 2.0f);
+	Vec2 p3(0.0f, 1.0f);
+	Vec2 p4(-2.0f, 2.0f);
 
 	// rotate
 	float angle = float(std::atan2(vel.x,-vel.y));
