@@ -10,20 +10,19 @@ public:
 	void init(const Vec2& pos_in, const Vec2& vel_in, const Color& col_in);
 	void DrawBird(Graphics& gfx) const;
 	void UpdatePos();
+	void UpdateVel(Vec2 velocity);
 	void UpdateSteer(Vec2 steer);
-	void updateSensor();
 	Vec2 getVel();
 	Vec2 getPos();
-	Vec2 getSensorPos();
+	Vec2 getSteer();
 
 private:
 
 	Vec2 vel;
 	Vec2 pos;
-	Vec2 sensor;
 	Vec2 steer = { 0,0 };
 	Color c;
-	const float Vmax = 3.0f;
+	const float Vmax = 2.5f;
 	bool initialised = false;
 
 

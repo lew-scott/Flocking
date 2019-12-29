@@ -12,24 +12,24 @@ class Flock
 {
 public:
 	Flock();
-	Vec2 align(Bird& birdA);
-	Vec2 Cohesion(Bird& birdA);
-	Vec2 Seperation(Bird& birdA);
+	Vec2 Flocking(Bird& birdA, Bird birds[]);
+	Vec2 Flock::avoidOtherFlock(Bird& birdA, Bird OtherBirds[]);
 	bool neighbourFound(Bird& birdA, Bird& birdB);
 	bool moveAway(Bird& birdA, Bird& birdB);
 	void updatePos();
 	void drawBirds(Graphics& gfx);
-	//void drawObstacles(Graphics& gfx);
+
 
 private:
-	static constexpr float outerRing = 40.0f;
-	static constexpr float innerRing = 15.0f;
+	static constexpr float outerRing = 50.0f;
+	static constexpr float innerRing = 30.0f;
 	std::random_device rd;
 	std::mt19937 rng;
 	std::uniform_real_distribution<float> xDist;
 	std::uniform_real_distribution<float> yDist;
 	static constexpr int birds = 100;
 	Bird b[birds];
+	Bird b2[birds];
 	Vec2 steer = { 0,0 };
 };
 

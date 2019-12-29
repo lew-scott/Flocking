@@ -49,5 +49,4 @@ void Game::UpdateModel()
 void Game::ComposeFrame()
 {
 	F.drawBirds(gfx);
-	//F.drawObstacles(gfx);
 }

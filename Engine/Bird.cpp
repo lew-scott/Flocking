@@ -36,8 +36,6 @@ void Bird::DrawBird(Graphics& gfx) const
 	gfx.Drawline(p2, p3, c);
 	gfx.Drawline(p3, p4, c);
 	gfx.Drawline(p4, p1, c);
-	//gfx.Drawline(p1, sensor, Colors::Red);
-	//gfx.DrawCircle(sensor.x, sensor.y, 2, Colors::Red);
 }
 
 
@@ -72,36 +70,17 @@ void Bird::UpdatePos()
 
 }
 
-
+void Bird::UpdateVel(Vec2 velocity)
+{
+	vel = velocity;
+}
 
 void Bird::UpdateSteer(Vec2 str)
 {
 	steer = str;
 }
 
-void Bird::updateSensor()
-{
-	Vec2 s = { 0,-100 };
-	float angle = float(std::atan2(vel.x, -vel.y));
-	s.rotate(angle);
-	sensor = s + pos;
-	if (sensor.x < 0)
-	{
-		sensor.x += 800.0f;
-	}
-	else if (sensor.x >= 800.0f)
-	{
-		sensor.x -= 800.0f;
-	}
-	if (sensor.y < 0)
-	{
-		sensor.y += 600.0f;
-	}
-	else if (sensor.y >= 600.0f)
-	{
-		sensor.y -= 600.0f;
-	}
-}
+
 
 Vec2 Bird::getVel()
 {
@@ -113,9 +92,10 @@ Vec2 Bird::getPos()
 	return pos;
 }
 
-Vec2 Bird::getSensorPos()
+Vec2 Bird::getSteer()
 {
-	return sensor;
+	return steer;
 }
+
 
 
