@@ -30,6 +30,7 @@ private:
 	static constexpr int birds = 100;
 	Bird b[birds];
 	Bird b2[birds];
+	Bird b3[birds];
 	Vec2 steer = { 0,0 };
 };
 

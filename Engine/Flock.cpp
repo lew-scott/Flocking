@@ -16,6 +16,7 @@ Flock::Flock()
 	{
 		b[i].init(Vec2(xDist(rng), yDist(rng)), Vec2(vDist(rng), vDist(rng)), Colors::Cyan);
 		b2[i].init(Vec2(xDist(rng), yDist(rng)), Vec2(vDist(rng), vDist(rng)), Colors::Red);
+		b3[i].init(Vec2(xDist(rng), yDist(rng)), Vec2(vDist(rng), vDist(rng)), Colors::Yellow);
 	}
 }
 
@@ -131,21 +132,27 @@ void Flock::updatePos()
 	
 	for (int i = 0; i < birds; i++)
 	{
-		//steer = b[i].getSteer();
-
 		steer = Flocking(b[i], b);
 		steer += avoidOtherFlock(b[i], b2);
+		steer += avoidOtherFlock(b[i], b3);
 		b[i].UpdateSteer(steer);
 
 		steer = Flocking(b2[i], b2);
 		steer += avoidOtherFlock(b2[i], b);
+		steer += avoidOtherFlock(b2[i], b3);
 		b2[i].UpdateSteer(steer);
+
+		steer = Flocking(b3[i], b3);
+		steer += avoidOtherFlock(b3[i], b);
+		steer += avoidOtherFlock(b3[i], b2);
+		b3[i].UpdateSteer(steer);
 		
 	}
 	for (int i = 0; i < birds; i++)
 	{
 		b[i].UpdatePos();
 		b2[i].UpdatePos();
+		b3[i].UpdatePos();
 	}
 }
 
@@ -155,6 +162,7 @@ void Flock::drawBirds(Graphics& gfx)
 	{
 		b[i].DrawBird(gfx);
 		b2[i].DrawBird(gfx);
+		b3[i].DrawBird(gfx);
 	}
 }
 
